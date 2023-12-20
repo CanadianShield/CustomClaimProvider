@@ -219,6 +219,7 @@ Validate that "When a HTTP request is received" step doesn't have a parameter.
 <p align="center" width="100%">
     <img width="70%" src="./images/Troubleshooting-AADSTS1100001-403-1.png">
 </p>
+
 1. Validate the EndPoint in Authorization Policy of Logic App is correct.
 
 `https://login.microsoftonline.com/tenantid/v2.0`
