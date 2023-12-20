@@ -17,12 +17,14 @@
 
 
 # Introduction
-I often get questions like *“How can I add some information as claim?”* or *“My informations are not in Entra ID, what should I do to include these information in my token?”* This example can be used to address some scenarios such as:
+I often get questions like *“How can I add some information as claim?”* or *“My information is not in Entra ID, what should I do to include these information in my token?”* This example can be used to address some scenarios such as:
 1. I need to have email of manager of user in his token. Based on this information, in my application I will be able to validate his access of this user is authorized or not.
 2. I need to 
 
 # Architecture schema
 ![image](./images/Architecture-Schema-1.png)
+
+![image](./images/Architecture-Schema-2.png)
 
 # Application JWT
 To read the content of token, you have different tools depending of type of token (Claims X-Ray, [JWT Decoder](https://adfshelp.microsoft.com/JwtDecoder/GetToken) or [JWT.io](https://jwt.io)) but in this example, I will use [jwt.ms](https://jwt.io).
