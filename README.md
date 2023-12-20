@@ -9,10 +9,11 @@
     - [Flow - Get manager](#flow---get-manager)
     - [Flow - ](#)
 - [Custom Authentication Extensions](#custom-authentication-extensions-preview)
-    - [User](#)
 - [Go back to your app](#go-back-to-your-application)
-
+- [Secure your Logic App](#secure-your-logic-app)
 - [Troubleshooting](#troubleshooting)
+    - [AADSTS50146](#aadsts50146)
+    - [AADSTS1100001](#aadsts1100001)
 
 
 # Introduction
