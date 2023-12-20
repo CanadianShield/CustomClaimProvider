@@ -8,7 +8,7 @@
 - [Logic Apss](#logic-app)
     - [Flow - Get manager](#flow---get-manager)
     - [Flow - ](#)
-- [Custom Authenitcation Extensions](#custom-authentication-extensions-preview)
+- [Custom Authentication Extensions](#custom-authentication-extensions-preview)
     - [User](#)
 - [Go back to your app](#go-back-to-your-application)
 
@@ -16,8 +16,7 @@
 
 
 # Introduction
-I often get question like *“How can I add some information as claim?”*, *“My informations are not in Entra ID, what should I do to include these information in my toekn?”*
-This example can be use to address some scenarios like:
+I often get questions like *“How can I add some information as claim?”* or *“My informations are not in Entra ID, what should I do to include these information in my token?”* This example can be used to address some scenarios such as:
 1. I need to have email of manager of user in his token. Based on this information, in my application I will be able to validate his access of this user is authorized or not.
 2. I need to 
 
@@ -25,7 +24,7 @@ This example can be use to address some scenarios like:
 
 
 # Application JWT
-To read the contain of token, you have different tools depending of type of token (Claims X-Ray, [JWT Decoder](https://adfshelp.microsoft.com/JwtDecoder/GetToken) or [JWT.io](https://jwt.io)) but in this example, I will use [jwt.ms](https://jwt.io).
+To read the content of token, you have different tools depending of type of token (Claims X-Ray, [JWT Decoder](https://adfshelp.microsoft.com/JwtDecoder/GetToken) or [JWT.io](https://jwt.io)) but in this example, I will use [jwt.ms](https://jwt.io).
 
 The first step consist to create an application named **CustomClaimProvider-App-JWT**. With this application, I will be able to view the contain of my tokens.
 I recommend to create it because each time you want to deploy an application, you should validate informations presented in the token. It will be helpful during your day-to-day.
