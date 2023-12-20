@@ -194,9 +194,9 @@ You should see something like this.
 </p>
 
 # Secure your Logic App
-Go to ** Authorization** on your Logic App, add a policy.
+Go to **Authorization** on your Logic App, add a policy.
 - Issuer: https://login.microsoftonline.com/tenantid/v2.0
-- Audience: <clientid of "CustomClaimProviderLogicApp"
+- Audience: <clientid of "CustomClaimProviderLogicApp">
 - azp: 99045fe1-7639-4a75-9d4a-577b6ca3810f (this id is the same for all tenants)
 <p align="center" width="100%">
     <img width="70%" src="./images/Secure-LogicApp-1.png">
@@ -206,7 +206,8 @@ Go to ** Authorization** on your Logic App, add a policy.
 # Troubleshooting
 To simulate an user authentication on your application, you can use this link. Replace before these values:
 - tenantid
-- clientid (it's clientid of your application)
+- clientid (clientid of your application)
+
 This link will get an ID token.
 
 `https://login.microsoftonline.com/<tenantid>/oauth2/v2.0/authorize?client_id=<clientid>&redirect_uri=https%3A%2F%2Fjwt.ms%2F&scope=openid&nonce=defaultNonce&response_type=id_token`
