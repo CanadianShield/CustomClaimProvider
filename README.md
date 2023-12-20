@@ -18,8 +18,8 @@
 
 # Introduction
 I often get questions like *“How can I add some information as claim?”* or *“My information is not in Entra ID, what should I do to include these information in my token?”* This example can be used to address some scenarios such as:
-1. I need to have email of manager of user in his token. Based on this information, in my application I will be able to validate his access of this user is authorized or not.
-2. I need to 
+1. I need to get email of manager of user in his token. Based on this information, in my application I will be able to validate his access of this user is authorized or not.
+2. I need to get businnes profil of user from an external database managed by HR. 
 
 # Architecture schema
 ![image](./images/Architecture-Schema-1.png)
