@@ -22,7 +22,7 @@ I often get questions like *“How can I add some information as claim?”* or *
 2. I need to 
 
 # Architecture schema
-
+![image](./images/Architecture-Schema-1.png)
 
 # Application JWT
 To read the content of token, you have different tools depending of type of token (Claims X-Ray, [JWT Decoder](https://adfshelp.microsoft.com/JwtDecoder/GetToken) or [JWT.io](https://jwt.io)) but in this example, I will use [jwt.ms](https://jwt.io).
