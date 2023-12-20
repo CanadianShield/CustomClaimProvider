@@ -136,10 +136,12 @@ Copy the workflow URL to next step.
 2. Modify the workflow URL
 Remove all things after **run** and then paste to **Target URL** field.
 Don't forget to add a description for other administrators.
+
 👉Before
-https://......./triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=-oVEm0KFMB5JmDIQ_RZNgjLO_GFLGPofbfoJdQ5mto4
+`https://......./triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=-oVEm0KFMB5JmDIQ_RZNgjLO_GFLGPofbfoJdQ5mto4`
+
 👉After
-https://......./triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun
+`https://......./triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun`
 <p align="center" width="100%">
     <img width="70%" src="./images/CustomAuthExt-2.png">
 </p>
@@ -204,8 +206,8 @@ This link will get an ID token.
 </p>
 
 ➡️Validate that manifest of your application (JWT) are correct:
-    ✅"acceptMappedClaims": true,
-    ✅"accessTokenAcceptedVersion": 2,
+- "acceptMappedClaims": true,
+- "accessTokenAcceptedVersion": 2,
 
 
 ## AADSTS1100001
