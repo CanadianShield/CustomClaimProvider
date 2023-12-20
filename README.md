@@ -54,6 +54,7 @@ I recommend to create it because each time you want to deploy an application, yo
 <p align="center" width="100%">
     <img width="70%" src="./images/Register-Application-JWT-3.png">
 </p>
+
 2. Manifest
 <p align="center" width="100%">
     <img width="70%" src="./images/Register-Application-JWT-4.png">
@@ -68,6 +69,7 @@ Before testing, you need to get some informations:
 </p>
 
 Then, replace values (*tenantid* and *clientid*) by your own values.
+
 `https://login.microsoftonline.com/<tenantid>/oauth2/v2.0/authorize?client_id=<clientid>&redirect_uri=https%3A%2F%2Fjwt.ms%2F&scope=openid&nonce=defaultNonce&response_type=id_token`
 
 Open a tab in your browser and paste the link. You should see your token decoded.
@@ -85,12 +87,14 @@ Remember that in my scenario 1, I want to get manager of user and add it into th
 </p>
 
 1. When a HTTP request is created
+
 When user will signin to application, this flow will trigger.
 <p align="center" width="100%">
     <img width="70%" src="./images/LogicApp-Manager-1.png">
 </p>
 
 2. Parse JSON - Body
+
 We need to parse the output to get user's id.
 <p align="center" width="100%">
     <img width="70%" src="./images/LogicApp-Manager-2.png">
@@ -100,12 +104,14 @@ Here the sample:
 `{ "properties": { "data": { "properties": { "@@odata.type": { "type": "string" }, "authenticationContext": { "properties": { "client": { "properties": { "ip": { "type": "string" }, "locale": { "type": "string" }, "market": { "type": "string" } }, "type": "object" }, "clientServicePrincipal": { "properties": { "appDisplayName": { "type": "string" }, "appId": { "type": "string" }, "displayName": { "type": "string" }, "id": { "type": "string" } }, "type": "object" }, "correlationId": { "type": "string" }, "protocol": { "type": "string" }, "resourceServicePrincipal": { "properties": { "appDisplayName": { "type": "string" }, "appId": { "type": "string" }, "displayName": { "type": "string" }, "id": { "type": "string" } }, "type": "object" }, "user": { "properties": { "companyName": { "type": "string" }, "createdDateTime": { "type": "string" }, "displayName": { "type": "string" }, "givenName": { "type": "string" }, "id": { "type": "string" }, "mail": { "type": "string" }, "preferredLanguage": { "type": "string" }, "surname": { "type": "string" }, "userPrincipalName": { "type": "string" }, "userType": { "type": "string" } }, "type": "object" } }, "type": "object" }, "authenticationEventListenerId": { "type": "string" }, "customAuthenticationExtensionId": { "type": "string" }, "tenantId": { "type": "string" } }, "type": "object" }, "source": { "type": "string" }, "type": { "type": "string" } }, "type": "object" }`
 
 3. HTTP - Get manager
+
 We get manager of user based on his id.
 <p align="center" width="100%">
     <img width="70%" src="./images/LogicApp-Manager-3.png">
 </p>
 
 4. Parse JSON - Body manager
+
 We need to parse the output to get user's id.
 <p align="center" width="100%">
     <img width="70%" src="./images/LogicApp-Manager-4.png">
@@ -116,6 +122,7 @@ Here the sample:
 `{ "type": "object", "properties": { "@@odata.context": { "type": "string" }, "businessPhones": { "type": "array", "items": { "type": "string" } }, "displayName": { "type": "string" }, "givenName": { "type": "string" }, "jobTitle": { "type": "string" }, "mail": { "type": "string" }, "mobilePhone": {}, "officeLocation": {}, "preferredLanguage": { "type": "string" }, "surname": { "type": "string" }, "userPrincipalName": { "type": "string" }, "id": { "type": "string" }, "manager": { "type": "object", "properties": { "@@odata.type": { "type": "string" }, "id": { "type": "string" }, "deletedDateTime": {}, "accountEnabled": { "type": "boolean" }, "ageGroup": {}, "businessPhones": { "type": "array" }, "city": {}, "companyName": {}, "consentProvidedForMinor": {}, "country": {}, "createdDateTime": { "type": "string" }, "creationType": {}, "department": {}, "displayName": { "type": "string" }, "employeeId": {}, "employeeHireDate": {}, "employeeLeaveDateTime": {}, "employeeType": {}, "externalUserState": {}, "externalUserStateChangeDateTime": {}, "faxNumber": {}, "givenName": { "type": "string" }, "isLicenseReconciliationNeeded": { "type": "boolean" }, "jobTitle": {}, "legalAgeGroupClassification": {}, "mail": { "type": "string" }, "mailNickname": { "type": "string" }, "mobilePhone": {}, "onPremisesDistinguishedName": {}, "onPremisesDomainName": {}, "onPremisesImmutableId": {}, "onPremisesLastSyncDateTime": {}, "onPremisesSecurityIdentifier": {}, "onPremisesSamAccountName": {}, "onPremisesSyncEnabled": {}, "onPremisesUserPrincipalName": {}, "otherMails": { "type": "array" }, "passwordPolicies": {}, "officeLocation": {}, "postalCode": {}, "preferredDataLocation": {}, "preferredLanguage": {}, "proxyAddresses": { "type": "array", "items": { "type": "string" } }, "refreshTokensValidFromDateTime": { "type": "string" }, "imAddresses": { "type": "array", "items": { "type": "string" } }, "isResourceAccount": {}, "showInAddressList": {}, "securityIdentifier": { "type": "string" }, "signInSessionsValidFromDateTime": { "type": "string" }, "state": {}, "streetAddress": {}, "surname": { "type": "string" }, "usageLocation": { "type": "string" }, "userPrincipalName": { "type": "string" }, "userType": { "type": "string" }, "employeeOrgData": {}, "passwordProfile": {}, "assignedLicenses": { "type": "array", "items": { "type": "object", "properties": { "disabledPlans": { "type": "array" }, "skuId": { "type": "string" } }, "required": [ "disabledPlans", "skuId" ] } }, "assignedPlans": { "type": "array", "items": { "type": "object", "properties": { "assignedDateTime": { "type": "string" }, "capabilityStatus": { "type": "string" }, "service": { "type": "string" }, "servicePlanId": { "type": "string" } }, "required": [ "assignedDateTime", "capabilityStatus", "service", "servicePlanId" ] } }, "authorizationInfo": { "type": "object", "properties": { "certificateUserIds": { "type": "array" } } }, "identities": { "type": "array", "items": { "type": "object", "properties": { "signInType": { "type": "string" }, "issuer": { "type": "string" }, "issuerAssignedId": { "type": "string" } }, "required": [ "signInType", "issuer", "issuerAssignedId" ] } }, "onPremisesProvisioningErrors": { "type": "array" }, "onPremisesExtensionAttributes": { "type": "object", "properties": { "extensionAttribute1": {}, "extensionAttribute2": {}, "extensionAttribute3": {}, "extensionAttribute4": {}, "extensionAttribute5": {}, "extensionAttribute6": {}, "extensionAttribute7": {}, "extensionAttribute8": {}, "extensionAttribute9": {}, "extensionAttribute10": {}, "extensionAttribute11": {}, "extensionAttribute12": {}, "extensionAttribute13": {}, "extensionAttribute14": {}, "extensionAttribute15": {} } }, "provisionedPlans": { "type": "array", "items": { "type": "object", "properties": { "capabilityStatus": { "type": "string" }, "provisioningStatus": { "type": "string" }, "service": { "type": "string" } }, "required": [ "capabilityStatus", "provisioningStatus", "service" ] } }, "serviceProvisioningErrors": { "type": "array" } } } } }`
 
 5. Response
+
 This response will send to Entra ID. We define the claim and the value.
 <p align="center" width="100%">
     <img width="70%" src="./images/LogicApp-Manager-5.png">
@@ -134,6 +141,7 @@ Copy the workflow URL to next step.
 </p>
 
 2. Modify the workflow URL
+
 Remove all things after **run** and then paste to **Target URL** field.
 Don't forget to add a description for other administrators.
 
@@ -147,6 +155,7 @@ Don't forget to add a description for other administrators.
 </p>
 
 3. API Authentication
+
 Create a new application and click on **Grant permissions**.
 <p align="center" width="100%">
     <img width="70%" src="./images/CustomAuthExt-3.png">
@@ -154,7 +163,8 @@ Create a new application and click on **Grant permissions**.
 
 # Go back to your application
 Now, we need to add our Custom Authentication Extensions in our application.
-1. 
+
+1. Edit **Attributes & Claims**
 <p align="center" width="100%">
     <img width="70%" src="./images/Application-JWT-1.png">
 </p>
@@ -164,18 +174,20 @@ Now, we need to add our Custom Authentication Extensions in our application.
     <img width="70%" src="./images/Application-JWT-2.png">
 </p>
 
-3. Select your Custom Authentication Extensions.
+3. Select your Custom Authentication Extensions
 <p align="center" width="100%">
     <img width="70%" src="./images/Application-JWT-3.png">
 </p>
 
 4. Add a new claim
+
 Define a name and select claim from Custom Claim Provider.
 <p align="center" width="100%">
     <img width="70%" src="./images/Application-JWT-4.png">
 </p>
 
-5. Validate 
+5. Validate
+
 You should see something like this.
 <p align="center" width="100%">
     <img width="70%" src="./images/Application-JWT-5.png">
@@ -228,6 +240,7 @@ To get more informations, go to **Authentication Events** on sign-in logs.
 </p>
 
 ➡️Validate the EndPoint in Authorization Policy of Logic App is correct.
+
 `https://login.microsoftonline.com/tenantid/v2.0`
 
 ➡️Validate manifest of App for Logic App
