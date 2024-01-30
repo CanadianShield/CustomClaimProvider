@@ -252,6 +252,12 @@ Go to **Authorization** on your Logic App, add a policy.
 </p>
 
 
+# Here we go
+Now, email og my manager is included.
+<p align="center" width="100%">
+    <img width="70%" src="./images/HereWeGo-Claims.png">
+</p>
+
 # Troubleshooting
 To simulate a user authentication on your application, you can use this link. Replace before these values:
 - tenantid
