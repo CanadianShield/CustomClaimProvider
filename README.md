@@ -99,17 +99,20 @@ When user will signin to application, this flow will trigger.
 
 2. Parse JSON - Body
 
-We need to parse the output to get user's id.
+You need to parse the output of **When a HTTP request is received** action to get user's id.
 <p align="center" width="100%">
     <img width="70%" src="./images/LogicApp-Manager-2.png">
 </p>
 
 Here the sample:
-`{ "properties": { "data": { "properties": { "@@odata.type": { "type": "string" }, "authenticationContext": { "properties": { "client": { "properties": { "ip": { "type": "string" }, "locale": { "type": "string" }, "market": { "type": "string" } }, "type": "object" }, "clientServicePrincipal": { "properties": { "appDisplayName": { "type": "string" }, "appId": { "type": "string" }, "displayName": { "type": "string" }, "id": { "type": "string" } }, "type": "object" }, "correlationId": { "type": "string" }, "protocol": { "type": "string" }, "resourceServicePrincipal": { "properties": { "appDisplayName": { "type": "string" }, "appId": { "type": "string" }, "displayName": { "type": "string" }, "id": { "type": "string" } }, "type": "object" }, "user": { "properties": { "companyName": { "type": "string" }, "createdDateTime": { "type": "string" }, "displayName": { "type": "string" }, "givenName": { "type": "string" }, "id": { "type": "string" }, "mail": { "type": "string" }, "preferredLanguage": { "type": "string" }, "surname": { "type": "string" }, "userPrincipalName": { "type": "string" }, "userType": { "type": "string" } }, "type": "object" } }, "type": "object" }, "authenticationEventListenerId": { "type": "string" }, "customAuthenticationExtensionId": { "type": "string" }, "tenantId": { "type": "string" } }, "type": "object" }, "source": { "type": "string" }, "type": { "type": "string" } }, "type": "object" }`
+
+```xml
+`{ "properties": { "data": { "properties": { "@@odata.type": { "type": "string" }, "authenticationContext": { "properties": { "client": { "properties": { "ip": { "type": "string" }, "locale": { "type": "string" }, "market": { "type": "string" } }, "type": "object" }, "clientServicePrincipal": { "properties": { "appDisplayName": { "type": "string" }, "appId": { "type": "string" }, "displayName": { "type": "string" }, "id": { "type": "string" } }, "type": "object" }, "correlationId": { "type": "string" }, "protocol": { "type": "string" }, "resourceServicePrincipal": { "properties": { "appDisplayName": { "type": "string" }, "appId": { "type": "string" }, "displayName": { "type": "string" }, "id": { "type": "string" } }, "type": "object" }, "user": { "properties": { "companyName": { "type": "string" }, "createdDateTime": { "type": "string" }, "displayName": { "type": "string" }, "givenName": { "type": "string" }, "id": { "type": "string" }, "mail": { "type": "string" }, "preferredLanguage": { "type": "string" }, "surname": { "type": "string" }, "userPrincipalName": { "type": "string" }, "userType": { "type": "string" } }, "type": "object" } }, "type": "object" }, "authenticationEventListenerId": { "type": "string" }, "customAuthenticationExtensionId": { "type": "string" }, "tenantId": { "type": "string" } }, "type": "object" }, "source": { "type": "string" }, "type": { "type": "string" } }, "type": "object" }
+```
 
 3. HTTP - Get manager
 
-We get manager of user based on his id.
+You get manager of user based on his id. Be sure you selected id of user Authentication Context from **Parse_Json_-_Body** action.
 <p align="center" width="100%">
     <img width="70%" src="./images/LogicApp-Manager-3.png">
 </p>
@@ -151,12 +154,12 @@ $params = @{
 New-MgServicePrincipalAppRoleAssignment -ServicePrincipalId $IdMI.Id -ResourceId $GraphServicePrincipal.Id -PrincipalId $IdMI.Id -AppRoleId $AppRole.Id
 
 ## Get assigned roles
-Get-MgServicePrincipalAppRoleAssignment -ServicePrincipalId $IdMI.Id`
+Get-MgServicePrincipalAppRoleAssignment -ServicePrincipalId $IdMI.Id
 ```
 
 4. Parse JSON - Body manager
 
-We need to parse the output to get user's id.
+You need to parse the output of **HTTP - Get manager** action to get user's id.
 <p align="center" width="100%">
     <img width="70%" src="./images/LogicApp-Manager-4.png">
 </p>
@@ -169,7 +172,7 @@ Here the sample:
 
 5. Response
 
-This response will send to Entra ID. We define the claim and the value.
+This response will send to Entra ID. Define the claim and the value.
 <p align="center" width="100%">
     <img width="70%" src="./images/LogicApp-Manager-5.png">
 </p>
@@ -208,7 +211,7 @@ Create a new application and click on **Grant permissions**.
 </p>
 
 # Go back to your application
-Now, we need to add our Custom Authentication Extensions in our application.
+Now, you need to add our Custom Authentication Extensions in our application.
 
 1. Edit **Attributes & Claims**
 <p align="center" width="100%">
