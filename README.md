@@ -19,7 +19,9 @@
 # Introduction
 I often get questions like *“How can I add some information as claim?”* or *“My information is not in Entra ID, what should I do to include these information in my token?”* This example can be used to address some scenarios such as:
 1. I need to get email of manager of user in his token. Based on this information, in my application I will be able to validate his access of this user is authorized or not.
-2. I need to get businnes profil of user from an external database managed by HR. 
+2. I need to get businnes profil of user from an external database managed by HR.
+
+Thank to copilot for grammar correction.
 
 # Architecture schema
 ![image](./images/Architecture-Schema-1.png)
@@ -29,12 +31,12 @@ I often get questions like *“How can I add some information as claim?”* or *
 # Application JWT
 To read the content of token, you have different tools depending of type of token (Claims X-Ray, [JWT Decoder](https://adfshelp.microsoft.com/JwtDecoder/GetToken) or [JWT.io](https://jwt.io)) but in this example, I will use [jwt.ms](https://jwt.io).
 
-The first step consist to create an application named **CustomClaimProvider-App-JWT**. With this application, I will be able to view the contain of my tokens.
+The first step consist to create an application named **CustomClaimProvider-App-JWT**. With this application, I will be able to view the content of my tokens.
 I recommend to create it because each time you want to deploy an application, you should validate informations presented in the token. It will be helpful during your day-to-day.
 
 ## Register application named CustomClaimProvider-App-JWT
 1. Define a name
-2. Select Single Tenant. In most of case, you don't need a Multitenant app. To understand the difference and risk, [follow this link]().
+2. Select Single Tenant. In most of case, you don't need a Multitenant app. To understand the difference and risk, [follow this link](https://merill.net/2023/04/azure-ad-multi-tenant-app-vs-single-tenant-app/).
 <p align="center" width="100%">
     <img width="70%" src="./images/Register-Application-JWT-1.png">
 </p>
@@ -43,27 +45,27 @@ I recommend to create it because each time you want to deploy an application, yo
 4. Define the URL of jwt.ms website.
 
 ## Configuration of this application
-#### Blade Enterprise Application
-1. Enable **Enabled for users to sign-in?**
-2. Disable **Assignment required?**. Admins and developers will be able to use this application. If some users have some issues, you can ask them to use this application to see their claims and trouble shoot why they have an issue with your application.
-3. Disable **Visible to users?** It's not necessary to offer this application through [myapplication](https://myapps.microsoft.com) portal.
+#### "Enterprise Application" menu
+1. Enable **Enabled for users to sign-in**
+2. Disable **Assignment required**. Admins and developers will be able to use this application. If some users have some issues, you can ask them to use this application to see their claims and trouble shoot why they have an issue with your application.
+3. Disable **Visible to users** It's not necessary to offer this application through [myapplication](https://myapps.microsoft.com) portal.
 <p align="center" width="100%">
     <img width="70%" src="./images/Register-Application-JWT-2.png">
 </p>
 
-#### Blade App Registration
+#### "App Registration" menu
 1. Select ID Tokens
 <p align="center" width="100%">
     <img width="70%" src="./images/Register-Application-JWT-3.png">
 </p>
 
-2. Manifest
+2. Manifest: modify both value.
 <p align="center" width="100%">
     <img width="70%" src="./images/Register-Application-JWT-4.png">
 </p>
 
 ## Test your application
-Before testing, you need to get some informations:
+Before testing, you need to get some information:
 1. Client ID
 2. Tenant ID
 <p align="center" width="100%">
@@ -80,7 +82,7 @@ Open a tab in your browser and paste the link. You should see your token decoded
 </p>
 
 # Logic App
-Before creating your Logic App, you have to decide which type you want to use. For cost perspective, in this example, I will use Consumption (less expensive).
+Before creating your Logic App, you have to decide which type you want to use. From cost perspective, in this example, I will use Consumption (less expensive).
 
 ## Flow - Get manager
 Remember that in my scenario 1, I want to get manager of user and add it into the user token.
@@ -111,6 +113,45 @@ We get manager of user based on his id.
 <p align="center" width="100%">
     <img width="70%" src="./images/LogicApp-Manager-3.png">
 </p>
+
+As you can see, here I selected "Managed Identity" and not a Service Principal.
+Got to **Identity** and enable **System assigned**
+<p align="center" width="100%">
+    <img width="70%" src="./images/LogicApp-Manager-3.1.png">
+</p>
+Then, you need to assign permission to this MI to read user information.
+To do that, you can use this script
+`
+$TenantID = "xxxxxx"
+$GraphAppId = "00000003-0000-0000-c000-000000000000"
+$DisplayNameMI = "CustomClaimProvider_Get_Manager"
+$GraphPermission = "Directory.Read.All"
+
+Connect-MgGraph -Scopes Application.Read.All,AppRoleAssignment.ReadWrite.All
+
+$IdMI = Get-MgServicePrincipal -Filter "DisplayName eq '$DisplayNameMI'"
+
+## Get assigned roles
+Get-MgServicePrincipalAppRoleAssignment -ServicePrincipalId $IdMI.Id
+
+## Get Graph roles
+$GraphServicePrincipal = Get-MgServicePrincipal -Filter "appId eq '$GraphAppId'"
+$AppRole = $GraphServicePrincipal.AppRoles | Where-Object {$_.Value -eq $GraphPermission -and $_.AllowedMemberTypes -contains "Application"}
+
+$AppRole
+
+$params = @{
+	principalId = $IdMI.Id
+	resourceId = $GraphAppId
+    appRoleId = $($AppRole.Id)
+}
+
+## Add permission to Managed Identity
+New-MgServicePrincipalAppRoleAssignment -ServicePrincipalId $IdMI.Id -ResourceId $GraphServicePrincipal.Id -PrincipalId $IdMI.Id -AppRoleId $AppRole.Id
+
+## Get assigned roles
+Get-MgServicePrincipalAppRoleAssignment -ServicePrincipalId $IdMI.Id
+`
 
 4. Parse JSON - Body manager
 
@@ -206,7 +247,7 @@ Go to **Authorization** on your Logic App, add a policy.
 
 
 # Troubleshooting
-To simulate an user authentication on your application, you can use this link. Replace before these values:
+To simulate a user authentication on your application, you can use this link. Replace before these values:
 - tenantid
 - clientid (clientid of your application)
 
