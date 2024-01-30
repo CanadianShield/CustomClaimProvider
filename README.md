@@ -121,7 +121,7 @@ Got to **Identity** and enable **System assigned**
 </p>
 Then, you need to assign permission to this MI to read user information.
 To do that, you can use this script:
-```
+```powershell
 $TenantID = "xxxxxx"
 $GraphAppId = "00000003-0000-0000-c000-000000000000"
 $DisplayNameMI = "CustomClaimProvider_Get_Manager"
