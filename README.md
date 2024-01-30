@@ -253,7 +253,7 @@ Go to **Authorization** on your Logic App, add a policy.
 
 
 # Here we go
-Now, email og my manager is included.
+Now, email of my manager is included.
 <p align="center" width="100%">
     <img width="70%" src="./images/HereWeGo-Claims.png">
 </p>
