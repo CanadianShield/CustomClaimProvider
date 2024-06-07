@@ -414,6 +414,9 @@ Here the sample:
                         },
                         "Identity": {
                             "type": "string"
+                        },
+                        "IdentityType": {
+                            "type": "string"
                         }
                     }
                 }
