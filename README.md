@@ -5,9 +5,9 @@
     - [Register an application](#register-application-named-customclaimprovider-app-jwt)
     - [Configuration](#configuration-of-this-application)
     - [Test](#test-your-application)
-- [Logic Apss](#logic-app)
+- [Logic Apps](#logic-app)
     - [Flow - Get manager](#flow---get-manager)
-    - [Flow - ](#)
+    - [Flow - Get type of identity from in Custom Security Attribute](#flow---get-type-of-identity-from-custom-security-attribute)
 - [Custom Authentication Extensions](#custom-authentication-extensions-preview)
 - [Go back to your app](#go-back-to-your-application)
 - [Secure your Logic App](#secure-your-logic-app)
@@ -19,14 +19,12 @@
 # Introduction
 I often get questions like *“How can I add some information as claim?”* or *“My information is not in Entra ID, what should I do to include these information in my token?”* This example can be used to address some scenarios such as:
 1. I need to get email of manager of user in his token. Based on this information, in my application I will be able to validate his access of this user is authorized or not.
-2. I need to get businnes profil of user from an external database managed by HR.
+2. I need to store a critical information in Entra ID and inject it in his token.
 
 Thank to copilot for grammar correction.
 
 # Architecture schema
 ![image](./images/Architecture-Schema-1.png)
-
-![image](./images/Architecture-Schema-2.png)
 
 # Application JWT
 To read the content of token, you have different tools depending of type of token (Claims X-Ray, [JWT Decoder](https://adfshelp.microsoft.com/JwtDecoder/GetToken) or [JWT.io](https://jwt.io)) but in this example, I will use [jwt.ms](https://jwt.io).
@@ -118,7 +116,7 @@ You get manager of user based on his id. Be sure you selected id of user Authent
 </p>
 
 As you can see, here I selected "Managed Identity" and not a Service Principal.
-Got to **Identity** and enable **System assigned**
+Go to **Identity** and enable **System assigned**
 <p align="center" width="100%">
     <img width="70%" src="./images/LogicApp-Manager-3.1.png">
 </p>
@@ -181,6 +179,283 @@ Copy the workflow URL to next step.
 <p align="center" width="100%">
     <img width="70%" src="./images/LogicApp-Manager-6.png">
 </p>
+
+## Flow - Get type of identity from Custom Security Attribute
+In this scenario 2, I store the type of identity (1 = employe, 2 = externe, 3 = dev, 4 = admin, 5 = svc, 6 = VIP) in a custom security attribute. The reason is simple. I don't want admins with user or group or other role be able to modify this value on identity. Only my high privileged admins and ServicePrincipal of my IGA solution are Attribute Assignement Administrator.
+<p align="center" width="100%">
+    <img width="70%" src="./images/Entraid-AttributeAssignmentAdmin.png">
+</p>
+
+
+<p align="center" width="100%">
+    <img width="70%" src="./images/LogicApp-CSA-1.png">
+</p>
+
+
+1. When a HTTP request is created
+
+When user will signin to application, this flow will trigger.
+<p align="center" width="100%">
+    <img width="70%" src="./images/LogicApp-CSA-2.png">
+</p>
+
+2. Parse JSON - Body
+
+You need to parse the output of **When a HTTP request is received** action to get user's id.
+<p align="center" width="100%">
+    <img width="70%" src="./images/LogicApp-CSA-3.png">
+</p>
+
+Here the sample:
+
+```xml
+`{
+    "type": "object",
+    "properties": {
+        "type": {
+            "type": "string"
+        },
+        "source": {
+            "type": "string"
+        },
+        "data": {
+            "type": "object",
+            "properties": {
+                "@@odata.type": {
+                    "type": "string"
+                },
+                "tenantId": {
+                    "type": "string"
+                },
+                "authenticationEventListenerId": {
+                    "type": "string"
+                },
+                "customAuthenticationExtensionId": {
+                    "type": "string"
+                },
+                "authenticationContext": {
+                    "type": "object",
+                    "properties": {
+                        "correlationId": {
+                            "type": "string"
+                        },
+                        "client": {
+                            "type": "object",
+                            "properties": {
+                                "ip": {
+                                    "type": "string"
+                                },
+                                "locale": {
+                                    "type": "string"
+                                },
+                                "market": {
+                                    "type": "string"
+                                }
+                            }
+                        },
+                        "protocol": {
+                            "type": "string"
+                        },
+                        "clientServicePrincipal": {
+                            "type": "object",
+                            "properties": {
+                                "id": {
+                                    "type": "string"
+                                },
+                                "appId": {
+                                    "type": "string"
+                                },
+                                "appDisplayName": {
+                                    "type": "string"
+                                },
+                                "displayName": {
+                                    "type": "string"
+                                }
+                            }
+                        },
+                        "resourceServicePrincipal": {
+                            "type": "object",
+                            "properties": {
+                                "id": {
+                                    "type": "string"
+                                },
+                                "appId": {
+                                    "type": "string"
+                                },
+                                "appDisplayName": {
+                                    "type": "string"
+                                },
+                                "displayName": {
+                                    "type": "string"
+                                }
+                            }
+                        },
+                        "user": {
+                            "type": "object",
+                            "properties": {
+                                "companyName": {
+                                    "type": "string"
+                                },
+                                "createdDateTime": {
+                                    "type": "string"
+                                },
+                                "displayName": {
+                                    "type": "string"
+                                },
+                                "givenName": {
+                                    "type": "string"
+                                },
+                                "id": {
+                                    "type": "string"
+                                },
+                                "mail": {
+                                    "type": "string"
+                                },
+                                "preferredLanguage": {
+                                    "type": "string"
+                                },
+                                "surname": {
+                                    "type": "string"
+                                },
+                                "userPrincipalName": {
+                                    "type": "string"
+                                },
+                                "userType": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+```
+
+3. HTTP - Get type of identity
+
+You get type of user based on his id. Be sure you selected id of user Authentication Context from **Parse_Json_-_Body** action.
+<p align="center" width="100%">
+    <img width="70%" src="./images/LogicApp-CSA-4.png">
+</p>
+
+As you can see, here I selected "Managed Identity" and not a Service Principal.
+Got to **Identity** and enable **System assigned**
+<p align="center" width="100%">
+    <img width="70%" src="./images/LogicApp-CSA-5.png">
+</p>
+Then, you need to assign permission to this MI to read user information.
+To do that, you can use this script:
+
+```powershell
+$TenantID = "xxxxxx"
+$GraphAppId = "00000003-0000-0000-c000-000000000000"
+$DisplayNameMI = "CustomClaimProvider_customsecattr"
+$GraphPermissions = @('CustomSecAttributeAssignment.Read.All','User.Read.All')
+
+Connect-MgGraph -Scopes Application.Read.All,AppRoleAssignment.ReadWrite.All
+
+$IdMI = Get-MgServicePrincipal -Filter "DisplayName eq '$DisplayNameMI'"
+
+## Get assigned roles
+Get-MgServicePrincipalAppRoleAssignment -ServicePrincipalId $IdMI.Id
+
+ForEach ($Permission in $GraphPermissions) {
+    ## Get Graph roles
+    $GraphServicePrincipal = Get-MgServicePrincipal -Filter "appId eq '$GraphAppId'"
+    $AppRole = $GraphServicePrincipal.AppRoles | Where-Object {$_.Value -eq $Permission -and $_.AllowedMemberTypes -contains "Application"}
+
+    $AppRole
+
+    $params = @{
+        principalId = $IdMI.Id
+        resourceId = $GraphAppId
+        appRoleId = $($AppRole.Id)
+    }
+
+    ## Add permission to Managed Identity
+    New-MgServicePrincipalAppRoleAssignment -ServicePrincipalId $IdMI.Id -ResourceId $GraphServicePrincipal.Id -PrincipalId $IdMI.Id -AppRoleId $AppRole.Id
+}
+
+## Get assigned roles
+Get-MgServicePrincipalAppRoleAssignment -ServicePrincipalId $IdMI.Id
+```
+
+4. Parse JSON - Body manager
+
+You need to parse the output of **HTTP - Get CSA** action to get user's id.
+<p align="center" width="100%">
+    <img width="70%" src="./images/LogicApp-CSA-6.png">
+</p>
+
+Here the sample:
+
+```xml
+{
+    "type": "object",
+    "properties": {
+        "@@odata.context": {
+            "type": "string"
+        },
+        "customSecurityAttributes": {
+            "type": "object",
+            "properties": {
+                "TrustedLevel": {
+                    "type": "object",
+                    "properties": {
+                        "@@odata.type": {
+                            "type": "string"
+                        },
+                        "Identity": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+```
+
+5. Response
+
+This response will send to Entra ID. Define the claim and the value.
+<p align="center" width="100%">
+    <img width="70%" src="./images/LogicApp-CSA-7.png">
+</p>
+
+Copy the workflow URL to next step.
+<p align="center" width="100%">
+    <img width="70%" src="./images/LogicApp-CSA-8.png">
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # Custom Authentication extensions (preview)
 ❗Keep in mind that is currently in preview.
