@@ -186,11 +186,16 @@ In this scenario 2, I store the type of identity (1 = employe, 2 = externe, 3 = 
     <img width="70%" src="./images/Entraid-AttributeAssignmentAdmin.png">
 </p>
 
+Here are my set and my Custom Security Attributes
+<p align="center" width="100%">
+    <img width="70%" src="./images/LogicApp-CSA-0.png">
+</p>
 
+
+Full flow
 <p align="center" width="100%">
     <img width="70%" src="./images/LogicApp-CSA-1.png">
 </p>
-
 
 1. When a HTTP request is created
 
@@ -433,32 +438,7 @@ Copy the workflow URL to next step.
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# Custom Authentication extensions (preview)
-❗Keep in mind that is currently in preview.
+# Custom Authentication extensions
 1. Create a new extension.
 <p align="center" width="100%">
     <img width="70%" src="./images/CustomAuthExt-1.png">
@@ -532,6 +512,12 @@ Now, email of my manager is included.
 <p align="center" width="100%">
     <img width="70%" src="./images/HereWeGo-Claims.png">
 </p>
+
+And here, the type of identity
+<p align="center" width="100%">
+    <img width="70%" src="./images/HereWeGo-Claims-2.png">
+</p>
+
 
 # Troubleshooting
 To simulate a user authentication on your application, you can use this link. Replace before these values:
