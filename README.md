@@ -17,7 +17,7 @@
 
 
 # Introduction
-I often get questions like *“How can I add some information as claim?”* or *“My information is not in Entra ID, what should I do to include these information in my token?”* This example can be used to address some scenarios such as:
+I often get questions such as, *“How can I add some information as claim?”* or *“My information is not in Entra ID, what should I do to include this information in my token?”* This example can be used to address some scenarios such as:
 1. I need to get email of manager of user in his token. Based on this information, in my application I will be able to validate his access of this user is authorized or not.
 2. I need to store a critical information in Entra ID and inject it in his token.
 
@@ -29,7 +29,7 @@ Thank to copilot for grammar correction.
 # Application JWT
 To read the content of token, you have different tools depending of type of token (Claims X-Ray, [JWT Decoder](https://adfshelp.microsoft.com/JwtDecoder/GetToken) or [JWT.io](https://jwt.io)) but in this example, I will use [jwt.ms](https://jwt.io).
 
-The first step consist to create an application named **CustomClaimProvider-App-JWT**. With this application, I will be able to view the content of my tokens.
+The first step consist of creating an application named **CustomClaimProvider-App-JWT**. With this application, I will be able to view the content of my tokens.
 I recommend to create it because each time you want to deploy an application, you should validate informations presented in the token. It will be helpful during your day-to-day.
 
 ## Register application named CustomClaimProvider-App-JWT
@@ -45,7 +45,7 @@ I recommend to create it because each time you want to deploy an application, yo
 ## Configuration of this application
 #### "Enterprise Application" menu
 1. Enable **Enabled for users to sign-in**
-2. Disable **Assignment required**. Admins and developers will be able to use this application. If some users have some issues, you can ask them to use this application to see their claims and trouble shoot why they have an issue with your application.
+2. Disable **Assignment required**. This will allow admins and developers to use this application. If some users have some issues, you can ask them to use this application to see their claims and trouble shoot why they have an issue with your application.
 3. Disable **Visible to users** It's not necessary to offer this application through [myapplication](https://myapps.microsoft.com) portal.
 <p align="center" width="100%">
     <img width="70%" src="./images/Register-Application-JWT-2.png">
@@ -537,7 +537,7 @@ This link will get an ID token.
     <img width="70%" src="./images/Troubleshooting-AADSTS50146-1.png">
 </p>
 
-➡️Validate that manifest of your application (JWT) are correct:
+➡️Ensure that manifest of your application (JWT) is correct:
 - "acceptMappedClaims": true,
 - "accessTokenAcceptedVersion": 2,
 
