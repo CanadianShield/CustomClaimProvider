@@ -19,7 +19,7 @@
 # Introduction
 I often get questions such as, *“How can I add some information as claim?”* or *“My information is not in Entra ID, what should I do to include this information in my token?”* This example can be used to address some scenarios such as:
 1. I need to get email of manager of user in his token. Based on this information, in my application I will be able to validate his access of this user is authorized or not.
-2. I need to store a critical information in Entra ID and inject it in his token.
+2. I need to store a sensitive information in Entra ID and inject it in his token.
 
 Thank to copilot for grammar correction.
 
